@@ -1,11 +1,12 @@
 
 import { Icon } from 'native-base';
 import React, { useState } from 'react';
-import { StyleSheet,View,Text, TouchableOpacity } from 'react-native';
+import { StyleSheet,View,Text, TouchableOpacity ,Alert} from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import { Ionicons } from "@expo/vector-icons";
+import { storeData } from './store';
 
-const DropdownComponent = ({data,value,setValue}) => {
+const DropdownComponent = ({data,value,setValue,setHistory}) => {
 //   const [value, setValue] = useState(null);
     // console.log('Data = ',data)
   return (
@@ -26,7 +27,7 @@ const DropdownComponent = ({data,value,setValue}) => {
       onChange={item => {
         setValue(item.value);
       }}
-      renderItem={(item)=>{
+      renderItem={(item,index)=>{
         return <View 
         // style={{width:'80%',alignItems:'center',flexDirection:'row'}}
         style={{marginLeft:20,marginRight:20,borderBottomWidth:0.5,alignItems:'center',padding:18,justifyContent:'space-between',flexDirection:'row-reverse'}}
@@ -34,7 +35,24 @@ const DropdownComponent = ({data,value,setValue}) => {
             <Text 
             style={{textAlign:'right',width:'80%',fontWeight:'bold'}}
             >{item.label}</Text>
-            <TouchableOpacity style={{width:15,height:15}}>
+            <TouchableOpacity onPress={()=>{
+              Alert.alert("تأكيد", "حذف ؟", [
+                {
+                  text: "لا",
+                  style: "cancel",
+                },
+                {
+                  text: "نعم",
+                  onPress: () => {
+                    let x=[...data]
+                    x.splice(index,1)
+                    // console.log('data= ',data)
+                    // console.log('now data = ',x)
+                    storeData('history',{data:x})
+                    setHistory(x)
+                  },
+                }])
+            }} style={{width:15,height:15}}>
                 <Icon as={Ionicons} name='trash'size={4} color='black' 
                 
                 />

@@ -188,7 +188,7 @@ export default function Calculate() {
                     </TouchableOpacity>
                   </View>
                   
-                  <CustomizedDropDown data={history} value={value} setValue={setValue} />
+                  <CustomizedDropDown data={history} setHistory={setHistory} value={value} setValue={setValue} />
 
                 </KeyboardAvoidingView>
                 <View style={{ width: '100%', alignItems: 'center', justifyContent: 'center', alignSelf: 'center', marginTop: 20, opacity: !open ? 1 : 0 }}>
